@@ -19,8 +19,10 @@ int	init_window(t_fdf *fdf)
 		return (free_fdf(fdf));
 	fdf->mlx_win = mlx_new_window(fdf->mlx, fdf->win_width, fdf->win_height, \
 		fdf->win_name);
-	fdf->front_img.img = mlx_new_image(fdf->mlx, fdf->win_width, fdf->win_height);
-	fdf->back_img.img = mlx_new_image(fdf->mlx, fdf->win_width, fdf->win_height);
+	fdf->front_img.img = mlx_new_image(fdf->mlx, fdf->win_width, \
+		fdf->win_height);
+	fdf->back_img.img = mlx_new_image(fdf->mlx, fdf->win_width, \
+		fdf->win_height);
 	if (!fdf->mlx_win || !fdf->front_img.img || !fdf->back_img.img)
 		return (free_fdf(fdf));
 	fdf->front_img.addr = mlx_get_data_addr(fdf->front_img.img, \
@@ -46,27 +48,11 @@ int	img_to_window(t_fdf *fdf)
 	return (1);
 }
 
-int fake_render(t_fdf *fdf)
-{
-	t_mlx_img	swap;
-	ft_memset(fdf->back_img.addr, 0, fdf->win_width * fdf->win_height \
-		* sizeof(fdf->back_img.bpp));
-	t_pixel	start = {LOW_RGB, 100, 100, 0};
-	t_pixel end = {HIGH_RGB, 200, 200, 0};
-	xiaolinwu_line(fdf, start, end);
-	swap = fdf->back_img;
-	fdf->back_img = fdf->front_img;
-	fdf->front_img = swap;
-	mlx_put_image_to_window(fdf->mlx, fdf->mlx_win, fdf->front_img.img, 0, 0);
-	return (1);
-}
-
 int	rendering_loop(t_fdf *fdf)
 {
 	mlx_hook(fdf->mlx_win, 2, (1L << 0) | (1L << 1), key_manager, fdf);
 	mlx_hook(fdf->mlx_win, 17, (1L << 1), free_fdf, fdf);
 	mlx_loop_hook(fdf->mlx, img_to_window, fdf);
-	//mlx_loop_hook(fdf->mlx, fake_render, fdf);
 	mlx_loop(fdf->mlx);
 	return (1);
 }
