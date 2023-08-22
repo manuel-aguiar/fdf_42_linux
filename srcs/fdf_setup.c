@@ -24,7 +24,7 @@ static int	default_colour(t_fdf *fdf, int min_rgb, int max_rgb)
 		if (!fdf->map[i].colour)
 		{
 			fdf->map[i].colour = avg_colour(min_rgb, max_rgb, \
-				fdf->map[i].height - fdf->min_z, fdf->z_range);
+				fdf->max_z - fdf->map[i].height, fdf->z_range);
 		}
 		i++;
 	}
