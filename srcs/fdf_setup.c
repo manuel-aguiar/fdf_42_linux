@@ -31,6 +31,19 @@ static int	default_colour(t_fdf *fdf, int min_rgb, int max_rgb)
 	return (1);
 }
 
+static void	flat_map_leveling(t_fdf *fdf)
+{
+	int	i;
+
+	i = 0;
+	while (i < fdf->lenmap)
+	{
+		fdf->map[i].height = 0;
+		i++;
+	}
+	fdf->z_range = 1;
+}
+
 static int	default_zoom_height(t_fdf *fdf)
 {
 	t_uint	i;
@@ -49,8 +62,12 @@ static int	default_zoom_height(t_fdf *fdf)
 		i++;
 	}
 	fdf->z_range = fdf->max_z - fdf->min_z;
+	if (!fdf->z_range)
+		flat_map_leveling(fdf);
 	fdf->view.zoom = ft_min(fdf->win_width / fdf->mcols / 2, \
 					fdf->win_height / fdf->mrows / 2);
+	fdf->view.z_multi = ft_fmin((float)ft_max(fdf->mrows, fdf->mcols)
+						/ (float)fdf->z_range, Z_MULTI);
 	return (1);
 }
 
@@ -68,7 +85,7 @@ static void	setup_default_vals(t_fdf *fdf)
 	fdf->high_colour = HIGH_RGB;
 	fdf->view.x_offset = fdf->win_width / 2;
 	fdf->view.y_offset = fdf->win_height / 2;
-	fdf->view.z_multi = Z_MULTI;
+	fdf->first_render = 1;
 	fdf->map = NULL;
 	fdf->vertices = NULL;
 	fdf->mlx = NULL;
@@ -92,10 +109,14 @@ int	setup_trigonometry(t_fdf *fdf)
 int	setup_fdf(t_fdf *fdf, char *file)
 {
 	int	fd;
+	int len;
 
+	len = ft_strlen(file);
+	if (len < 4 || ft_strncmp(&file[len - 4], ".fdf", 4))
+		return (error_msg("fdf: input file must be of type \".fdf\"\n"));
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (error_msg(ERR_OPEN));
+		return (perror_msg(ERR_OPEN));
 	setup_default_vals(fdf);
 	if (!file_to_map(fdf, fd))
 		return (0);
@@ -103,7 +124,7 @@ int	setup_fdf(t_fdf *fdf, char *file)
 	default_colour(fdf, fdf->low_colour, fdf->high_colour);
 	fdf->vertices = malloc(sizeof((*fdf->vertices)) * fdf->lenmap);
 	if (!fdf->vertices)
-		return (error_msg(ERR_MALLOC) + free_fdf(fdf));
+		return (perror_msg(ERR_MALLOC) + free_fdf(fdf));
 	setup_vertices(fdf);
 	return (1);
 }

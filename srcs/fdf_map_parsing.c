@@ -18,7 +18,7 @@ static int	map_err_handler(char ***split, t_vdmlist **list)
 		ft_free_charmat_null(split, &free);
 	if (list)
 		vdmlist_destroy(list, &ft_free_split);
-	return (error_msg(ERR_MALLOC));
+	return (perror_msg(ERR_MALLOC));
 }
 
 static int	fdf_atoi(char *str, t_coord *single)
@@ -89,7 +89,7 @@ int	file_to_map(t_fdf *fdf, int fd)
 
 	list = vdmlist_new();
 	if (!list)
-		return (error_msg(ERR_MALLOC));
+		return (perror_msg(ERR_MALLOC));
 	line = (char *)1;
 	while (line)
 	{

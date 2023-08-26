@@ -12,8 +12,14 @@
 
 #include "fdf.h"
 
-int	error_msg(char *msg)
+int	perror_msg(char *msg)
 {
 	perror(msg);
+	return (0);
+}
+
+int	error_msg(char *msg)
+{
+	ft_putstr_fd(msg, 2);
 	return (0);
 }

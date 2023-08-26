@@ -5,7 +5,7 @@
 
 NAME 		=		fdf
 
-CC 			= 		cc -g
+CC 			= 		cc -g -fsanitize=address
 ## -Wall Wextra Werror
 FLAGS 		= 		-Wall -Werror -Wextra
 ADD_LIB 	= 		-L./$(LIB_PATH) -lft
@@ -38,7 +38,6 @@ FILES		=		fdf_main.c							\
 					fdf_lb_utils.c						\
 					fdf_key_manager.c					\
 					fdf_key_manager2.c					\
-					fdf_print_utils.c					\
 					fdf_draw.c							\
 					fdf_error_msg.c
 

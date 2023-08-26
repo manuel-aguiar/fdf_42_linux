@@ -12,6 +12,26 @@
 
 #include "fdf.h"
 
+static void lb_safety(t_fdf *fdf, t_pixel *start, t_pixel *end)
+{
+	if (start->x > fdf->win_width - 1)
+		start->x = fdf->win_width - 1;
+	if (start->x < 0)
+		start->x = 0;
+	if (start->y > fdf->win_height - 1)
+		start->y = fdf->win_height - 1;
+	if (start->y < 0)
+		start->y = 0;
+	if (end->x > fdf->win_width - 1)
+		end->x = fdf->win_width - 1;
+	if (end->x < 0)
+		end->x = 0;
+	if (end->y > fdf->win_height - 1)
+		end->y = fdf->win_height - 1;
+	if (end->y < 0)
+		end->y = 0;
+}
+
 static void	lb_ratios1(t_lbclip *lb)
 {
 	if (lb->p1 != 0)
@@ -90,6 +110,7 @@ int	liang_barsky_clipper(t_fdf *fdf, t_pixel start, t_pixel end, t_pixel new[])
 	start.y = lb.yn1;
 	end.x = lb.xn2;
 	end.y = lb.yn2;
+	lb_safety(fdf, &start, &end);
 	new[0] = start;
 	new[1] = end;
 	return (1);

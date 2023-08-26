@@ -43,6 +43,16 @@ int	adjust_zoom(t_fdf *fdf, int key, int change)
 	return (1);
 }
 
+void reset_defaults(t_fdf *fdf)
+{
+	fdf->view.zoom = ft_min(fdf->win_width / fdf->mcols / 2, \
+					fdf->win_height / fdf->mrows / 2);
+	fdf->view.z_multi = ft_fmin((float)ft_max(fdf->mrows, fdf->mcols)
+						/ (float)ft_max(fdf->z_range, 1), Z_MULTI);
+	fdf->view.x_offset = fdf->win_width / 2;
+	fdf->view.y_offset = fdf->win_height / 2;
+}
+
 int	apply_projection(t_fdf *fdf, int key)
 {
 	if ((key >> BIT_VISO) & 1)
@@ -64,5 +74,6 @@ int	apply_projection(t_fdf *fdf, int key)
 		fdf->view.z_angle = Z_ANGLE_TOP * (MY_PI / 180.0);
 	}
 	setup_trigonometry(fdf);
+	reset_defaults(fdf);
 	return (1);
 }

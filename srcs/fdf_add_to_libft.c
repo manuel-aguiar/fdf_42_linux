@@ -35,3 +35,17 @@ int	ft_max(int first, int second)
 		return (first);
 	return (second);
 }
+
+float	ft_fmin(float first, float second)
+{
+	if (first < second)
+		return (first);
+	return (second);
+}
+
+float	ft_fmax(float first, float second)
+{
+	if (first > second)
+		return (first);
+	return (second);
+}

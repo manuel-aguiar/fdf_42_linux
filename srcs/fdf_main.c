@@ -38,7 +38,7 @@ int	main(int ac, char **av)
 	t_fdf	fdf;
 
 	if (ac != 2)
-		return (0);
+		return (error_msg("fdf: wrong number of arguments\n"));
 	if (!setup_fdf(&fdf, av[1]))
 		return (0);
 	if (!init_window(&fdf))

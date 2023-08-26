@@ -49,6 +49,7 @@
 # define Y_ANGLE_PLL 30
 # define Z_ANGLE_PLL 0
 
+//# define Z_MULTI 1
 # define Z_MULTI 0.2f
 
 # define RGB(r, g, b) (((r) << 16) | ((g) << 8) | (b))
@@ -166,6 +167,16 @@ typedef struct s_lbclip
 	float	rn2;
 }	t_lbclip;
 
+typedef struct s_center_start
+{
+	int	max_x;
+	int	min_x;
+	int	max_y;
+	int min_y;
+	int x_offset;
+	int	y_offset;
+}	t_center_start;
+
 typedef struct s_view
 {
 	int		zoom;
@@ -209,6 +220,7 @@ typedef struct s_fdf
 	char		win_name[4];
 	t_uint		rgb_size;
 	t_view		view;
+	int			first_render;
 	void		*mlx;
 	void		*mlx_win;
 	t_mlx_img	front_img;
@@ -234,6 +246,8 @@ int		ft_ternary(int cond, int true, int false);
 int		ft_abs(int num);
 int		ft_min(int first, int second);
 int		ft_max(int first, int second);
+float	ft_fmin(float first, float second);
+float	ft_fmax(float first, float second);
 
 /*fdf_xiaolinwu.c*/
 int		xiaolinwu_line(t_fdf *fdf, t_pixel start, t_pixel end);
@@ -278,6 +292,7 @@ int		setup_vertices(t_fdf *fdf);
 int		draw_image(t_fdf *fdf);
 
 /*fdf_error_msg.c*/
+int		perror_msg(char *msg);
 int		error_msg(char *msg);
 
 /*fdf_main.c*/
