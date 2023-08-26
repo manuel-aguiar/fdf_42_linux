@@ -42,12 +42,17 @@ int	key_manager(t_fdf *fdf)
 
 int	adjust_height(t_fdf *fdf, int key, float change)
 {
+	float	chg;
+
+	if (fdf->view.z_multi < 0.000005f)
+		return (1);
+	chg = ft_fmin(ft_max(fdf->mrows, fdf->mcols) / (float)fdf->z_range, change);
 	if ((key >> BIT_H_UP) & 1)
-		fdf->view.z_multi += change;
+		fdf->view.z_multi += chg;
 	if ((key >> BIT_H_DOWN) & 1)
-		fdf->view.z_multi -= change;
-	if (fdf->view.z_multi < 0.01f)
-		fdf->view.z_multi = 0.01f;
+		fdf->view.z_multi -= chg;
+	if (fdf->view.z_multi < 0.00001f)
+		fdf->view.z_multi = 0.00001f;
 	return (1);
 }
 

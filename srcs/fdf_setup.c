@@ -64,8 +64,8 @@ static int	default_zoom_height(t_fdf *fdf)
 	fdf->z_range = fdf->max_z - fdf->min_z;
 	if (!fdf->z_range)
 		flat_map_leveling(fdf);
-	fdf->view.zoom = ft_min(fdf->win_width / fdf->mcols / 2, \
-					fdf->win_height / fdf->mrows / 2);
+	fdf->view.zoom = ft_min(fdf->win_width / fdf->mcols * 2 / 3, \
+					fdf->win_height / fdf->mrows * 2 / 3);
 	fdf->view.z_multi = ft_fmin((float)ft_max(fdf->mrows, fdf->mcols)
 						/ (float)fdf->z_range, Z_MULTI);
 	return (1);
@@ -93,6 +93,7 @@ static void	setup_default_vals(t_fdf *fdf)
 	fdf->front_img.img = NULL;
 	fdf->back_img.img = NULL;
 	fdf->keys = 0;
+	fdf->mouse.buttons = 0;
 }
 
 int	setup_trigonometry(t_fdf *fdf)

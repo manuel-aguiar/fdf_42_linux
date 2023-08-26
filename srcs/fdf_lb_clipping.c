@@ -102,10 +102,10 @@ int	liang_barsky_clipper(t_fdf *fdf, t_pixel start, t_pixel end, t_pixel new[])
 	lb.rn2 = lb_mini(lb.posarr, lb.posind);
 	if (lb.rn1 > lb.rn2)
 		return (0);
-	lb.xn1 = start.x + (float)lb.p2 * lb.rn1;
-	lb.yn1 = start.y + (float)lb.p4 * lb.rn1;
-	lb.xn2 = start.x + (float)lb.p2 * lb.rn2;
-	lb.yn2 = start.y + (float)lb.p4 * lb.rn2;
+	lb.xn1 = start.x + lb.p2 * lb.rn1;
+	lb.yn1 = start.y + lb.p4 * lb.rn1;
+	lb.xn2 = start.x + lb.p2 * lb.rn2;
+	lb.yn2 = start.y + lb.p4 * lb.rn2;
 	start.x = lb.xn1;
 	start.y = lb.yn1;
 	end.x = lb.xn2;

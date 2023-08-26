@@ -47,3 +47,15 @@ int	main(int ac, char **av)
 	free_fdf(&fdf);
 	return (0);
 }
+
+
+
+/*
+TDLIST
+
+mouse hook zoom at point, drag
+instruction string
+
+NORMINETTE
+
+*/

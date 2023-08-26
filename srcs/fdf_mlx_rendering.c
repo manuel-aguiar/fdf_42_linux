@@ -123,6 +123,7 @@ int	img_to_window(t_fdf *fdf)
 	ft_memset(fdf->back_img.addr, 0, fdf->win_width * fdf->win_height \
 		* sizeof(fdf->back_img.bpp));
 	key_manager(fdf);
+	mouse_manager(fdf);
 	draw_image(fdf);
 	swap = fdf->back_img;
 	fdf->back_img = fdf->front_img;
@@ -135,6 +136,9 @@ int	rendering_loop(t_fdf *fdf)
 {
 	mlx_hook(fdf->mlx_win, 2, (1L << 0), key_press, fdf);
 	mlx_hook(fdf->mlx_win, 3, (1L << 1), key_release, fdf);
+	mlx_hook(fdf->mlx_win, 4, (1L << 2), mouse_press, fdf);
+	mlx_hook(fdf->mlx_win, 5, (1L << 3), mouse_release, fdf);
+	mlx_hook(fdf->mlx_win, 6, (1L << 6), mouse_position, fdf);
 	mlx_hook(fdf->mlx_win, 17, (1L << 1), free_fdf, fdf);
 	mlx_do_key_autorepeatoff(fdf->mlx);
 	mlx_loop_hook(fdf->mlx, img_to_window, fdf);

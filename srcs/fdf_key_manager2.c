@@ -51,6 +51,7 @@ void reset_defaults(t_fdf *fdf)
 						/ (float)ft_max(fdf->z_range, 1), Z_MULTI);
 	fdf->view.x_offset = fdf->win_width / 2;
 	fdf->view.y_offset = fdf->win_height / 2;
+	fdf->first_render = 1;
 }
 
 int	apply_projection(t_fdf *fdf, int key)
