@@ -12,20 +12,23 @@
 
 #include "fdf.h"
 
-int	key_manager(int key, t_fdf *fdf)
+int	key_manager(t_fdf *fdf)
 {
-	if (key == ESC)
+	int key;
+
+	key = fdf->keys;
+	if ((key >> BIT_ESC) & 1)
 		free_fdf(fdf);
-	else if (key == ARR_U || key == ARR_D || key == ARR_R || key == ARR_L)
-		adjust_offset(fdf, key, 5);
-	else if (key == 'o' || key == 'p')
+	if ((key >> BIT_AU) & 1 || (key >> BIT_AD) & 1 || (key >> BIT_AR) & 1 || (key >> BIT_AL) & 1)
+		adjust_offset(fdf, key, 2);
+	if ((key >> BIT_O) & 1 || (key >> BIT_P) & 1)
 		adjust_zoom(fdf, key, 1);
-	else if (key == 'h' || key == 'l')
-		adjust_height(fdf, key, 0.01f);
-	else if (key == 'a' || key == 'd' || key == 's' \
-			|| key == 'w' || key == 'q' || key == 'e')
-		adjust_rotation(fdf, key, 0.02f);
-	else if (key == 'b' || key == 'n' || key == 'm')
+	if ((key >> BIT_H) & 1 || (key >> BIT_L) & 1)
+		adjust_height(fdf, key, 0.002f);
+	if ((key >> BIT_A) & 1 || (key >> BIT_D) & 1 || (key >> BIT_S) & 1 \
+			|| (key >> BIT_W) & 1 || (key >> BIT_Q) & 1 || (key >> BIT_E) & 1)
+		adjust_rotation(fdf, key, 0.004f);
+	if ((key >> BIT_B) & 1 || (key >> BIT_N) & 1 || (key >> BIT_M) & 1)
 		apply_projection(fdf, key);
 	setup_vertices(fdf);
 	return (0);
@@ -33,7 +36,7 @@ int	key_manager(int key, t_fdf *fdf)
 
 int	adjust_height(t_fdf *fdf, int key, float change)
 {
-	if (key == 'l')
+	if ((key >> BIT_L) & 1)
 		change *= -1;
 	fdf->view.z_multi += change;
 	if (fdf->view.z_multi < 0.01f)
@@ -43,21 +46,21 @@ int	adjust_height(t_fdf *fdf, int key, float change)
 
 int	adjust_rotation(t_fdf *fdf, int key, float change)
 {
-	if (key == 's' || key == 'd' || key == 'q')
+	if ((key >> BIT_S) & 1 || (key >> BIT_D) & 1 || (key >> BIT_Q) & 1)
 		change *= -1;
-	if (key == 's' || key == 'w')
+	if ((key >> BIT_S) & 1|| (key >> BIT_W) & 1)
 	{
 		fdf->view.x_angle += change;
 		fdf->view.cos_x = cosf(fdf->view.x_angle);
 		fdf->view.sin_x = sinf(fdf->view.x_angle);
 	}
-	else if (key == 'a' || key == 'd')
+	if ((key >> BIT_A) & 1 || (key >> BIT_D) & 1)
 	{
 		fdf->view.y_angle += change;
 		fdf->view.cos_y = cosf(fdf->view.y_angle);
 		fdf->view.sin_y = sinf(fdf->view.y_angle);
 	}
-	else if (key == 'q' || key == 'e')
+	if ((key >> BIT_Q) & 1 || (key >> BIT_E) & 1)
 	{
 		fdf->view.z_angle += change;
 		fdf->view.cos_z = cosf(fdf->view.z_angle);

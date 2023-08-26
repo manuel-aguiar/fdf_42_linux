@@ -75,6 +75,7 @@ static void	setup_default_vals(t_fdf *fdf)
 	fdf->mlx_win = NULL;
 	fdf->front_img.img = NULL;
 	fdf->back_img.img = NULL;
+	fdf->keys = 0;
 }
 
 int	setup_trigonometry(t_fdf *fdf)

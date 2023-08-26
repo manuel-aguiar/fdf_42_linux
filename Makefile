@@ -27,7 +27,7 @@ LIBFT		=		libft.a
 
 ## SOURCE FILES ##
 FILES		=		fdf_main.c							\
-					fdf_mlx.c							\
+					fdf_mlx_rendering.c					\
 					fdf_map_parsing.c					\
 					fdf_setup.c							\
 					fdf_pixel_utils.c					\

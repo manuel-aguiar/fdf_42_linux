@@ -62,11 +62,50 @@
 # define HIGH_RGB RGB(255, 255, 255)
 
 /*keys*/
-# define ESC 65307
-# define ARR_L 65361
-# define ARR_U 65362
-# define ARR_R 65363
-# define ARR_D 65364
+
+enum e_keys_vals
+{
+	KEY_ESC = 65307,
+	KEY_AL = 65361,
+	KEY_AU = 65362,
+	KEY_AR = 65363,
+	KEY_AD = 65364,
+	KEY_A = 'a',
+	KEY_S = 's',
+	KEY_D = 'd',
+	KEY_W = 'w',
+	KEY_Q = 'q',
+	KEY_E = 'e',
+	KEY_H = 'h',
+	KEY_L = 'l',
+	KEY_O = 'o',
+	KEY_P = 'p',
+	KEY_B = 'b',
+	KEY_M = 'm',
+	KEY_N = 'n',
+};
+
+enum e_keys_bits
+{
+	BIT_ESC = 0,
+	BIT_AL = 1,
+	BIT_AU = 2,
+	BIT_AR = 3,
+	BIT_AD = 4,
+	BIT_A = 5,
+	BIT_S = 6,
+	BIT_D = 7,
+	BIT_W = 8,
+	BIT_Q = 9,
+	BIT_E = 10,
+	BIT_H = 11,
+	BIT_L = 12,
+	BIT_O = 13,
+	BIT_P = 14,
+	BIT_B = 15,
+	BIT_M = 16,
+	BIT_N = 17,
+};
 
 typedef struct s_coord
 {
@@ -174,6 +213,7 @@ typedef struct s_fdf
 	void		*mlx_win;
 	t_mlx_img	front_img;
 	t_mlx_img	back_img;
+	int			keys;
 }	t_fdf;
 
 /*fdf_parsing.c*/
@@ -220,7 +260,7 @@ int		adjust_rotation(t_fdf *fdf, int key, float change);
 int		apply_projection(t_fdf *fdf, int key);
 
 /*fdf_key_moves_cont.c*/
-int		key_manager(int key, t_fdf *fdf);
+int		key_manager(t_fdf *fdf);
 
 /*fdf_print_utils.c*/
 void	print_height(t_fdf *fdf);
