@@ -30,9 +30,10 @@ int	adjust_zoom(t_fdf *fdf, int key, int change)
 	int	prev_zoom;
 
 	prev_zoom = fdf->view.zoom;
+	if ((key >> BIT_ZIN) & 1)
+		fdf->view.zoom += change;
 	if ((key >> BIT_ZOUT) & 1)
-		change *= -1;
-	fdf->view.zoom += change;
+		fdf->view.zoom -= change;
 	if (fdf->view.zoom < 1)
 		fdf->view.zoom = 1;
 	fdf->view.x_offset = fdf->win_width / 2 - (fdf->win_width / 2 \
@@ -50,13 +51,13 @@ int	apply_projection(t_fdf *fdf, int key)
 		fdf->view.y_angle = Y_ANGLE_ISO * (MY_PI / 180.0);
 		fdf->view.z_angle = Z_ANGLE_ISO * (MY_PI / 180.0);
 	}
-	if ((key >> BIT_VPLL) & 1)
+	else if ((key >> BIT_VPLL) & 1)
 	{
 		fdf->view.x_angle = X_ANGLE_PLL * (MY_PI / 180.0);
 		fdf->view.y_angle = Y_ANGLE_PLL * (MY_PI / 180.0);
 		fdf->view.z_angle = Z_ANGLE_PLL * (MY_PI / 180.0);
 	}
-	if ((key >> BIT_VTOP) & 1)
+	else if ((key >> BIT_VTOP) & 1)
 	{
 		fdf->view.x_angle = X_ANGLE_TOP * (MY_PI / 180.0);
 		fdf->view.y_angle = Y_ANGLE_TOP * (MY_PI / 180.0);
