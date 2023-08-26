@@ -88,24 +88,33 @@ enum e_keys_vals
 
 enum e_keys_bits
 {
-	BIT_ESC = 0,
-	BIT_MVL = 1,
-	BIT_MVU = 2,
-	BIT_MVR = 3,
-	BIT_MVD = 4,
-	BIT_RY_L = 5,
-	BIT_RY_R = 6,
-	BIT_RX_L = 7,
-	BIT_RX_R = 8,
-	BIT_RZ_L = 9,
-	BIT_RZ_R = 10,
-	BIT_H_UP = 11,
-	BIT_H_DOWN = 12,
-	BIT_ZIN = 13,
-	BIT_ZOUT = 14,
-	BIT_VISO = 15,
-	BIT_VPLL = 16,
-	BIT_VTOP = 17,
+	BIT_ESC,
+	BIT_MVL,
+	BIT_MVU,
+	BIT_MVR,
+	BIT_MVD,
+	BIT_RY_L,
+	BIT_RY_R,
+	BIT_RX_L,
+	BIT_RX_R,
+	BIT_RZ_L,
+	BIT_RZ_R,
+	BIT_H_UP,
+	BIT_H_DOWN,
+	BIT_ZIN,
+	BIT_ZOUT,
+	BIT_VISO,
+	BIT_VPLL,
+	BIT_VTOP,
+};
+
+enum e_button_val_bits
+{
+	BUT_L = 1,
+	BUT_R,
+	BUT_M,
+	BUT_U,
+	BUT_D,
 };
 
 typedef struct s_coord
@@ -194,6 +203,15 @@ typedef struct s_view
 	float	sin_z;
 }	t_view;
 
+typedef struct s_mouse
+{
+	int	buttons;
+	int	cur_x;
+	int	cur_y;
+	int	prev_x;
+	int	prev_y;
+}	t_mouse;
+
 typedef struct s_mlx_img
 {
 	void	*img;
@@ -226,6 +244,7 @@ typedef struct s_fdf
 	t_mlx_img	front_img;
 	t_mlx_img	back_img;
 	int			keys;
+	t_mouse		mouse;
 }	t_fdf;
 
 /*fdf_parsing.c*/
@@ -275,6 +294,11 @@ int		apply_projection(t_fdf *fdf, int key);
 
 /*fdf_key_moves_cont.c*/
 int		key_manager(t_fdf *fdf);
+int		mouse_manager(t_fdf *fdf);
+int		mouse_press(int button, int x, int y, t_fdf *fdf);
+int		mouse_release(int button, int x, int y, t_fdf *fdf);
+int		mouse_tester(int button, int x, int y, t_fdf *fdf);
+int		mouse_position(int x, int y, t_fdf *fdf);
 
 /*fdf_print_utils.c*/
 void	print_height(t_fdf *fdf);
