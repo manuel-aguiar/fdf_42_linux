@@ -12,35 +12,7 @@
 
 #include "fdf.h"
 
-int	key_manager(t_fdf *fdf)
-{
-	int key;
-
-	key = fdf->keys;
-	if ((key >> BIT_ESC) & 1)
-		free_fdf(fdf);
-	if ((key >> BIT_MVU) & 1 || (key >> BIT_MVD) & 1 \
-	|| (key >> BIT_MVR) & 1 || (key >> BIT_MVL) & 1)
-		adjust_offset(fdf, key, 2);
-	if ((key >> BIT_ZIN) & 1 || (key >> BIT_ZOUT) & 1)
-		adjust_zoom(fdf, key, 1);
-	if ((key >> BIT_H_UP) & 1 || (key >> BIT_H_DOWN) & 1)
-		adjust_height(fdf, key, 0.002f);
-	if ((key >> BIT_RX_L) & 1 || (key >> BIT_RX_R) & 1 \
-	|| (key >> BIT_RY_L) & 1 || (key >> BIT_RY_R) & 1 \
-	|| (key >> BIT_RZ_L) & 1 || (key >> BIT_RZ_R) & 1)
-		adjust_rotation(fdf, key, 0.004f);
-	if ((key >> BIT_VISO) & 1)
-		apply_projection(fdf, key);
-	if ((key >> BIT_VPLL) & 1)
-		apply_projection(fdf, key);
-	if ((key >> BIT_VTOP) & 1)
-		apply_projection(fdf, key);
-	setup_vertices(fdf);
-	return (0);
-}
-
-int	adjust_height(t_fdf *fdf, int key, float change)
+static int	adjust_height(t_fdf *fdf, int key, float change)
 {
 	float	chg;
 
@@ -57,7 +29,7 @@ int	adjust_height(t_fdf *fdf, int key, float change)
 	return (1);
 }
 
-int	adjust_rotation(t_fdf *fdf, int key, float change)
+static int	adjust_rotation(t_fdf *fdf, int key, float change)
 {
 	if ((key >> BIT_RX_L) & 1)
 		fdf->view.x_angle -= change;
@@ -74,4 +46,63 @@ int	adjust_rotation(t_fdf *fdf, int key, float change)
 	setup_trigonometry(fdf);
 	fdf->state_changed = 1;
 	return (1);
+}
+
+static void	reset_defaults(t_fdf *fdf)
+{
+	fdf->view.zoom = ft_max(ft_min(fdf->win_width / fdf->mcols * 2 / 3, \
+					fdf->win_height / fdf->mrows * 2 / 3), 1);
+	fdf->view.z_multi = ft_fmin((float)ft_max(fdf->mrows, fdf->mcols) \
+						/ (float)ft_max(fdf->z_range, 1), Z_MULTI);
+	fdf->view.x_offset = fdf->win_width / 2;
+	fdf->view.y_offset = fdf->win_height / 2;
+	fdf->first_render = 1;
+	fdf->state_changed = 1;
+}
+
+static int	apply_projection(t_fdf *fdf, int key)
+{
+	if ((key >> BIT_VISO) & 1)
+	{
+		fdf->view.x_angle = X_ANGLE_ISO * (MY_PI / 180.0);
+		fdf->view.y_angle = Y_ANGLE_ISO * (MY_PI / 180.0);
+		fdf->view.z_angle = Z_ANGLE_ISO * (MY_PI / 180.0);
+	}
+	else if ((key >> BIT_VPLL) & 1)
+	{
+		fdf->view.x_angle = X_ANGLE_PLL * (MY_PI / 180.0);
+		fdf->view.y_angle = Y_ANGLE_PLL * (MY_PI / 180.0);
+		fdf->view.z_angle = Z_ANGLE_PLL * (MY_PI / 180.0);
+	}
+	else if ((key >> BIT_VTOP) & 1)
+	{
+		fdf->view.x_angle = X_ANGLE_TOP * (MY_PI / 180.0);
+		fdf->view.y_angle = Y_ANGLE_TOP * (MY_PI / 180.0);
+		fdf->view.z_angle = Z_ANGLE_TOP * (MY_PI / 180.0);
+	}
+	setup_trigonometry(fdf);
+	reset_defaults(fdf);
+	return (1);
+}
+
+int	key_manager(t_fdf *fdf)
+{
+	int	key;
+
+	key = fdf->keys;
+	if ((key >> BIT_ESC) & 1)
+		free_fdf(fdf);
+	if ((key >> BIT_H_UP) & 1 || (key >> BIT_H_DOWN) & 1)
+		adjust_height(fdf, key, 0.002f);
+	if ((key >> BIT_RX_L) & 1 || (key >> BIT_RX_R) & 1 \
+	|| (key >> BIT_RY_L) & 1 || (key >> BIT_RY_R) & 1 \
+	|| (key >> BIT_RZ_L) & 1 || (key >> BIT_RZ_R) & 1)
+		adjust_rotation(fdf, key, 0.004f);
+	if ((key >> BIT_VISO) & 1)
+		apply_projection(fdf, key);
+	if ((key >> BIT_VPLL) & 1)
+		apply_projection(fdf, key);
+	if ((key >> BIT_VTOP) & 1)
+		apply_projection(fdf, key);
+	return (0);
 }

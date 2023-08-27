@@ -14,6 +14,12 @@
 
 # define FT_MATH_H
 
-int	bin_srch(int *arr, int size, int target, int (*cmp)(int, int));
+int		bin_srch(int *arr, int size, int target, int (*cmp)(int, int));
+int		ft_abs(int num);
+int		ft_min(int first, int second);
+int		ft_max(int first, int second);
+float	ft_fmin(float first, float second);
+float	ft_fmax(float first, float second);
+int		ft_ternary(int cond, int true, int false);
 
 #endif

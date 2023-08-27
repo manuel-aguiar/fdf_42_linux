@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-static void lb_safety(t_fdf *fdf, t_pixel *start, t_pixel *end)
+static void	lb_safety(t_fdf *fdf, t_pixel *start, t_pixel *end)
 {
 	if (start->x > fdf->win_width - 1)
 		start->x = fdf->win_width - 1;

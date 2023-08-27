@@ -66,7 +66,7 @@ static int	default_zoom_height(t_fdf *fdf)
 		flat_map_leveling(fdf);
 	fdf->view.zoom = ft_max(ft_min(fdf->win_width / fdf->mcols * 2 / 3, \
 					fdf->win_height / fdf->mrows * 2 / 3), 1);
-	fdf->view.z_multi = ft_fmin((float)ft_max(fdf->mrows, fdf->mcols)
+	fdf->view.z_multi = ft_fmin((float)ft_max(fdf->mrows, fdf->mcols) \
 						/ (float)fdf->z_range, Z_MULTI);
 	return (1);
 }
@@ -97,21 +97,10 @@ static void	setup_default_vals(t_fdf *fdf)
 	fdf->mouse.buttons = 0;
 }
 
-int	setup_trigonometry(t_fdf *fdf)
-{
-	fdf->view.cos_x = cosf(fdf->view.x_angle);
-	fdf->view.sin_x = sinf(fdf->view.x_angle);
-	fdf->view.cos_y = cosf(fdf->view.y_angle);
-	fdf->view.sin_y = sinf(fdf->view.y_angle);
-	fdf->view.cos_z = cosf(fdf->view.z_angle);
-	fdf->view.sin_z = sinf(fdf->view.z_angle);
-	return (1);
-}
-
 int	setup_fdf(t_fdf *fdf, char *file)
 {
 	int	fd;
-	int len;
+	int	len;
 
 	len = ft_strlen(file);
 	if (len < 4 || ft_strncmp(&file[len - 4], ".fdf", 4))
@@ -127,6 +116,5 @@ int	setup_fdf(t_fdf *fdf, char *file)
 	fdf->vertices = malloc(sizeof((*fdf->vertices)) * fdf->lenmap);
 	if (!fdf->vertices)
 		return (perror_msg(ERR_MALLOC) + free_fdf(fdf));
-	setup_vertices(fdf);
 	return (1);
 }

@@ -67,10 +67,6 @@
 enum e_keys_vals
 {
 	KEY_ESC = 65307,
-	KEY_MVL = 65361,
-	KEY_MVU = 65362,
-	KEY_MVR = 65363,
-	KEY_MVD = 65364,
 	KEY_RY_L = 'a',
 	KEY_RY_R = 'd',
 	KEY_RX_L = 's',
@@ -79,21 +75,15 @@ enum e_keys_vals
 	KEY_RZ_R = 'e',
 	KEY_H_UP = 'r',
 	KEY_H_DOWN = 'f',
-	KEY_HELP = 'h',
-	KEY_ZIN = 'z',
-	KEY_ZOUT = 'x',
 	KEY_VISO = 'b',
 	KEY_VPLL = 'm',
 	KEY_VTOP = 'n',
+	KEY_HELP = 'h',
 };
 
 enum e_keys_bits
 {
 	BIT_ESC,
-	BIT_MVL,
-	BIT_MVU,
-	BIT_MVR,
-	BIT_MVD,
 	BIT_RY_L,
 	BIT_RY_R,
 	BIT_RX_L,
@@ -102,12 +92,10 @@ enum e_keys_bits
 	BIT_RZ_R,
 	BIT_H_UP,
 	BIT_H_DOWN,
-	BIT_HELP,
-	BIT_ZIN,
-	BIT_ZOUT,
 	BIT_VISO,
 	BIT_VPLL,
 	BIT_VTOP,
+	BIT_HELP,
 };
 
 enum e_button_val_bits
@@ -254,8 +242,10 @@ typedef struct s_fdf
 int		file_to_map(t_fdf *fdf, int fd);
 
 /*fdf_setup.c*/
-int		setup_trigonometry(t_fdf *fdf);
 int		setup_fdf(t_fdf *fdf, char *file);
+
+/*fdf_setup_trigonometry.c*/
+int		setup_trigonometry(t_fdf *fdf);
 
 /*fdf_pixel_utils.c*/
 void	swap_pixels(t_pixel *start, t_pixel *end);
@@ -288,36 +278,34 @@ int		liang_barsky_clipper(t_fdf *fdf, t_pixel start, t_pixel end, \
 float	lb_maxi(float arr[], int n);
 float	lb_mini(float arr[], int n);
 
-/*fdf_key_moves.c*/
-int		adjust_offset(t_fdf *fdf, int key, int change);
-int		adjust_zoom(t_fdf *fdf, int key, int change);
-int		adjust_height(t_fdf *fdf, int key, float change);
-int		adjust_rotation(t_fdf *fdf, int key, float change);
-int		apply_projection(t_fdf *fdf, int key);
+/*fdf_key_register.c*/
+int		key_press(int keycode, t_fdf *fdf);
+int		key_release(int keycode, t_fdf *fdf);
 
-/*fdf_key_moves_cont.c*/
+/*fdf_key_manager.c*/
 int		key_manager(t_fdf *fdf);
-int		mouse_manager(t_fdf *fdf);
+
+/*fdf_mouse_register.c*/
 int		mouse_press(int button, int x, int y, t_fdf *fdf);
 int		mouse_release(int button, int x, int y, t_fdf *fdf);
-int		mouse_tester(int button, int x, int y, t_fdf *fdf);
 int		mouse_position(int x, int y, t_fdf *fdf);
 
-/*fdf_print_utils.c*/
-void	print_height(t_fdf *fdf);
-void	print_coords(t_fdf *fdf);
+/*fdf_mouse_manager.c*/
+int		mouse_manager(t_fdf *fdf);
 
-/*fdf_mlx.c*/
+/*fdf_mlx_rendering.c*/
 int		init_window(t_fdf *fdf);
 int		img_to_window(t_fdf *fdf);
 int		rendering_loop(t_fdf *fdf);
 
-/*fdf_render.c*/
-void	offset_from_center(t_fdf *fdf);
-void	transform_pixel(t_fdf *fdf, t_pixel *pixel);
-int		setup_vertices(t_fdf *fdf);
+/*fdf_draw.c*/
 int		draw_image(t_fdf *fdf);
 
+/*fdf_draw_first_render.c*/
+void	center_first_render(t_fdf *fdf);
+
+
+/*fdf_help_string.c*/
 int		help_string(t_fdf *fdf);
 
 /*fdf_error_msg.c*/

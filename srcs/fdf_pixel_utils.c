@@ -43,7 +43,7 @@ int	avg_colour(int start, int end, int num, int den)
 {
 	t_ulong	r;
 	t_ulong	g;
-	t_ulong b;
+	t_ulong	b;
 
 	if (den == 0)
 		return (start);

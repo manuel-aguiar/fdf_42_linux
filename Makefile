@@ -30,16 +30,18 @@ FILES		=		fdf_main.c							\
 					fdf_mlx_rendering.c					\
 					fdf_map_parsing.c					\
 					fdf_setup.c							\
+					fdf_setup_trigonometry.c			\
 					fdf_pixel_utils.c					\
-					fdf_add_to_libft.c					\
 					fdf_xiaolinwu.c						\
 					fdf_xiaolinwu_utils.c				\
 					fdf_lb_clipping.c					\
 					fdf_lb_utils.c						\
+					fdf_key_register.c					\
 					fdf_key_manager.c					\
-					fdf_key_manager2.c					\
+					fdf_mouse_register.c				\
 					fdf_mouse_manager.c					\
 					fdf_draw.c							\
+					fdf_draw_first_render.c				\
 					fdf_help_string.c					\
 					fdf_error_msg.c
 

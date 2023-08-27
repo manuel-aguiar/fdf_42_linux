@@ -119,7 +119,8 @@ FILES_ISORT		=	cocktailsort.c				\
 					tim_sort.c					\
 					tim_sort_utils.c			\
 
-FILES_MATH		=	bin_srch.c
+FILES_MATH		=	bin_srch.c					\
+					ft_min_max.c
 
 FILES_MPOOL		=	memory_pool.c				\
 					memory_pool_utils.c
