@@ -76,7 +76,6 @@ static void	setup_default_vals(t_fdf *fdf)
 	fdf->win_width = FDF_WIDTH;
 	fdf->win_height = FDF_HEIGHT;
 	ft_strlcpy(fdf->win_name, FDF_WINDOW_NAME, sizeof(fdf->win_name));
-	fdf->rgb_size = FDF_RGB_SIZE;
 	fdf->view.x_angle = X_ANGLE_ISO * (MY_PI / 180.0);
 	fdf->view.y_angle = Y_ANGLE_ISO * (MY_PI / 180.0);
 	fdf->view.z_angle = Z_ANGLE_ISO * (MY_PI / 180.0);
@@ -111,6 +110,9 @@ int	setup_fdf(t_fdf *fdf, char *file)
 	setup_default_vals(fdf);
 	if (!file_to_map(fdf, fd))
 		return (0);
+	if (fdf->lenmap <= 1)
+		return (error_msg("fdf: input file has less than 2 points\n") + \
+				free_fdf(fdf));
 	default_zoom_height(fdf);
 	default_colour(fdf, fdf->low_colour, fdf->high_colour);
 	fdf->vertices = malloc(sizeof((*fdf->vertices)) * fdf->lenmap);

@@ -35,7 +35,6 @@
 # define FDF_WINDOW_NAME "FdF"
 # define FDF_WIDTH 1920
 # define FDF_HEIGHT 1024
-# define FDF_RGB_SIZE 3
 
 # define X_ANGLE_ISO -144.74
 # define Y_ANGLE_ISO 30
@@ -76,8 +75,8 @@ enum e_keys_vals
 	KEY_H_UP = 'r',
 	KEY_H_DOWN = 'f',
 	KEY_VISO = 'b',
-	KEY_VPLL = 'm',
-	KEY_VTOP = 'n',
+	KEY_VPLL = 'n',
+	KEY_VTOP = 'm',
 	KEY_HELP = 'h',
 };
 
@@ -226,7 +225,6 @@ typedef struct s_fdf
 	int			win_width;
 	int			win_height;
 	char		win_name[4];
-	t_uint		rgb_size;
 	t_view		view;
 	int			first_render;
 	void		*mlx;
