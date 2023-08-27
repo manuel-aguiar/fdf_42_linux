@@ -171,8 +171,8 @@ typedef struct s_center_start
 	int	max_x;
 	int	min_x;
 	int	max_y;
-	int min_y;
-	int x_offset;
+	int	min_y;
+	int	x_offset;
 	int	y_offset;
 }	t_center_start;
 
@@ -303,7 +303,6 @@ int		draw_image(t_fdf *fdf);
 
 /*fdf_draw_first_render.c*/
 void	center_first_render(t_fdf *fdf);
-
 
 /*fdf_help_string.c*/
 int		help_string(t_fdf *fdf);
