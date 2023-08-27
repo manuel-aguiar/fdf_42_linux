@@ -64,8 +64,10 @@ static int	default_zoom_height(t_fdf *fdf)
 	fdf->z_range = fdf->max_z - fdf->min_z;
 	if (!fdf->z_range)
 		flat_map_leveling(fdf);
-	fdf->view.zoom = ft_max(ft_min(fdf->win_width / fdf->mcols * 2 / 3, \
-					fdf->win_height / fdf->mrows * 2 / 3), 1);
+	fdf->view.zoom = ft_max(ft_min(fdf->win_width / fdf->mcols * DEF_ZOOM, \
+					fdf->win_height / fdf->mrows * DEF_ZOOM), 1);
+	fdf->view.zoom_cap = sqrt(pow(fdf->win_width, 2) \
+						+ pow(fdf->win_height, 2));
 	fdf->view.z_multi = ft_fmin((float)ft_max(fdf->mrows, fdf->mcols) \
 						/ (float)fdf->z_range, Z_MULTI);
 	return (1);
@@ -115,6 +117,8 @@ int	setup_fdf(t_fdf *fdf, char *file)
 				free_fdf(fdf));
 	default_zoom_height(fdf);
 	default_colour(fdf, fdf->low_colour, fdf->high_colour);
+	fdf->view.rot_sensib = cbrt(fdf->lenmap) * 0.00045f;
+	fdf->view.hgt_sensib = cbrt(fdf->lenmap) * 0.00025f;
 	fdf->vertices = malloc(sizeof((*fdf->vertices)) * fdf->lenmap);
 	if (!fdf->vertices)
 		return (perror_msg(ERR_MALLOC) + free_fdf(fdf));

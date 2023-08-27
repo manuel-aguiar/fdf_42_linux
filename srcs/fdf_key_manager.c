@@ -12,6 +12,8 @@
 
 #include "fdf.h"
 
+int	key_zoom(t_fdf *fdf, int key, int change);
+
 static int	adjust_height(t_fdf *fdf, int key, float change)
 {
 	float	chg;
@@ -93,11 +95,13 @@ int	key_manager(t_fdf *fdf)
 	if ((key >> BIT_ESC) & 1)
 		free_fdf(fdf);
 	if ((key >> BIT_H_UP) & 1 || (key >> BIT_H_DOWN) & 1)
-		adjust_height(fdf, key, 0.002f);
+		adjust_height(fdf, key, fdf->view.hgt_sensib);
+	if ((key >> BIT_ZIN) & 1 || (key >> BIT_ZOUT) & 1)
+		key_zoom(fdf, key, 1);
 	if ((key >> BIT_RX_L) & 1 || (key >> BIT_RX_R) & 1 \
 	|| (key >> BIT_RY_L) & 1 || (key >> BIT_RY_R) & 1 \
 	|| (key >> BIT_RZ_L) & 1 || (key >> BIT_RZ_R) & 1)
-		adjust_rotation(fdf, key, 0.004f);
+		adjust_rotation(fdf, key, fdf->view.rot_sensib);
 	if ((key >> BIT_VISO) & 1)
 		apply_projection(fdf, key);
 	if ((key >> BIT_VPLL) & 1)

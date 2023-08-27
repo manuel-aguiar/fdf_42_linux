@@ -6,7 +6,7 @@
 /*   By: mmaria-d <mmaria-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 15:49:19 by mmaria-d          #+#    #+#             */
-/*   Updated: 2023/08/27 18:12:07 by mmaria-d         ###   ########.fr       */
+/*   Updated: 2023/08/27 20:13:10 by mmaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	help_string2(t_fdf *fdf)
 	mlx_string_put(fdf->mlx, fdf->mlx_win, 50, 170, 0xffffff, \
 	"Mouse Wheel to zoom in and out towards the mouse pointer");
 	mlx_string_put(fdf->mlx, fdf->mlx_win, 50, 185, 0xffffff, \
+	"Z and X also zoom in and out towards the mouse pointer");
+	mlx_string_put(fdf->mlx, fdf->mlx_win, 50, 200, 0xffffff, \
 	"Press H to close Help!");
 	return (1);
 }

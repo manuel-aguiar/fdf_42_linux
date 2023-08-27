@@ -61,6 +61,8 @@
 # define LOW_RGB RGB(18, 23, 238)
 # define HIGH_RGB RGB(255, 255, 255)
 
+# define DEF_ZOOM 2 / 3
+
 /*keys*/
 
 enum e_keys_vals
@@ -74,6 +76,8 @@ enum e_keys_vals
 	KEY_RZ_R = 'e',
 	KEY_H_UP = 'r',
 	KEY_H_DOWN = 'f',
+	KEY_ZIN = 'z',
+	KEY_ZOUT = 'x',
 	KEY_VISO = 'b',
 	KEY_VPLL = 'n',
 	KEY_VTOP = 'm',
@@ -91,6 +95,8 @@ enum e_keys_bits
 	BIT_RZ_R,
 	BIT_H_UP,
 	BIT_H_DOWN,
+	BIT_ZIN,
+	BIT_ZOUT,
 	BIT_VISO,
 	BIT_VPLL,
 	BIT_VTOP,
@@ -178,6 +184,9 @@ typedef struct s_center_start
 typedef struct s_view
 {
 	int		zoom;
+	int		zoom_cap;
+	float	rot_sensib;
+	float	hgt_sensib;
 	int		x_offset;
 	int		y_offset;
 	float	x_angle;

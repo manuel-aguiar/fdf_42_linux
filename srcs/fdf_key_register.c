@@ -6,7 +6,7 @@
 /*   By: mmaria-d <mmaria-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 17:36:28 by mmaria-d          #+#    #+#             */
-/*   Updated: 2023/08/27 17:54:12 by mmaria-d         ###   ########.fr       */
+/*   Updated: 2023/08/27 19:50:27 by mmaria-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ static int	key_press_cont(int keycode, t_fdf *fdf)
 	int	keys;
 
 	keys = fdf->keys;
-	if (keycode == KEY_VISO)
+	if (keycode == KEY_ZIN)
+		keys |= (1 << BIT_ZIN);
+	else if (keycode == KEY_ZOUT)
+		keys |= (1 << BIT_ZOUT);
+	else if (keycode == KEY_VISO)
 		keys |= (1 << BIT_VISO);
 	else if (keycode == KEY_VPLL)
 		keys |= (1 << BIT_VPLL);
@@ -44,6 +48,10 @@ static int	key_release_cont(int keycode, t_fdf *fdf)
 		keys &= ~(1 << BIT_H_UP);
 	else if (keycode == KEY_H_DOWN)
 		keys &= ~(1 << BIT_H_DOWN);
+	else if (keycode == KEY_ZIN)
+		keys &= ~(1 << BIT_ZIN);
+	else if (keycode == KEY_ZOUT)
+		keys &= ~(1 << BIT_ZOUT);
 	else if (keycode == KEY_VISO)
 		keys &= ~(1 << BIT_VISO);
 	else if (keycode == KEY_VPLL)
