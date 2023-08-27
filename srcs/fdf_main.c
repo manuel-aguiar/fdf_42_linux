@@ -53,8 +53,7 @@ int	main(int ac, char **av)
 /*
 TDLIST
 
-mouse hook zoom at point, drag
-instruction string
+command sensibility,
 
 NORMINETTE
 

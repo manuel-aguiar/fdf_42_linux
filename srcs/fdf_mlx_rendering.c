@@ -81,16 +81,20 @@ int key_press(int keycode, t_fdf *fdf)
 		fdf->keys |= (1 << BIT_H_UP);
 	else if (keycode == KEY_H_DOWN)
 		fdf->keys |= (1 << BIT_H_DOWN);
-	else if (keycode == KEY_ZIN)
-		fdf->keys |= (1 << BIT_ZIN);
-	else if (keycode == KEY_ZOUT)
-		fdf->keys |= (1 << BIT_ZOUT);
 	else if (keycode == KEY_VISO)
 		fdf->keys |= (1 << BIT_VISO);
 	else if (keycode == KEY_VPLL)
 		fdf->keys |= (1 << BIT_VPLL);
 	else if (keycode == KEY_VTOP)
 		fdf->keys |= (1 << BIT_VTOP);
+	else if (keycode == KEY_HELP)
+	{
+		if (!((fdf->keys >> BIT_HELP) & 1))
+			fdf->keys |= (1 << BIT_HELP);
+		else
+			fdf->keys &= ~(1 << BIT_HELP);
+		fdf->state_changed = 1;
+	}
 	return (0);
 }
 
@@ -124,11 +128,17 @@ int	img_to_window(t_fdf *fdf)
 		* sizeof(fdf->back_img.bpp));
 	key_manager(fdf);
 	mouse_manager(fdf);
-	draw_image(fdf);
-	swap = fdf->back_img;
-	fdf->back_img = fdf->front_img;
-	fdf->front_img = swap;
-	mlx_put_image_to_window(fdf->mlx, fdf->mlx_win, fdf->front_img.img, 0, 0);
+	if (fdf->state_changed)
+	{
+		draw_image(fdf);
+		swap = fdf->back_img;
+		fdf->back_img = fdf->front_img;
+		fdf->front_img = swap;
+		mlx_put_image_to_window(fdf->mlx, fdf->mlx_win, \
+								fdf->front_img.img, 0, 0);
+		help_string(fdf);
+		fdf->state_changed = 0;
+	}
 	return (1);
 }
 

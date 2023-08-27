@@ -53,6 +53,7 @@ int	adjust_height(t_fdf *fdf, int key, float change)
 		fdf->view.z_multi -= chg;
 	if (fdf->view.z_multi < 0.00001f)
 		fdf->view.z_multi = 0.00001f;
+	fdf->state_changed = 1;
 	return (1);
 }
 
@@ -71,5 +72,6 @@ int	adjust_rotation(t_fdf *fdf, int key, float change)
 	if ((key >> BIT_RZ_R) & 1)
 		fdf->view.z_angle += change;
 	setup_trigonometry(fdf);
+	fdf->state_changed = 1;
 	return (1);
 }

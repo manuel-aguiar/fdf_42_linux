@@ -16,7 +16,6 @@ void	set_pixel(t_fdf *fdf, int x, int y, int color)
 {
 	char		*dst;
 
-
 	dst = fdf->back_img.addr + (y * fdf->back_img.line_len + \
 		x * (fdf->back_img.bpp / 8));
 	*(unsigned int *)dst = color;

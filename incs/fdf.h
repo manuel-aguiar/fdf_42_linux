@@ -79,6 +79,7 @@ enum e_keys_vals
 	KEY_RZ_R = 'e',
 	KEY_H_UP = 'r',
 	KEY_H_DOWN = 'f',
+	KEY_HELP = 'h',
 	KEY_ZIN = 'z',
 	KEY_ZOUT = 'x',
 	KEY_VISO = 'b',
@@ -101,6 +102,7 @@ enum e_keys_bits
 	BIT_RZ_R,
 	BIT_H_UP,
 	BIT_H_DOWN,
+	BIT_HELP,
 	BIT_ZIN,
 	BIT_ZOUT,
 	BIT_VISO,
@@ -244,6 +246,7 @@ typedef struct s_fdf
 	t_mlx_img	front_img;
 	t_mlx_img	back_img;
 	int			keys;
+	int			state_changed;
 	t_mouse		mouse;
 }	t_fdf;
 
@@ -314,6 +317,8 @@ void	offset_from_center(t_fdf *fdf);
 void	transform_pixel(t_fdf *fdf, t_pixel *pixel);
 int		setup_vertices(t_fdf *fdf);
 int		draw_image(t_fdf *fdf);
+
+int		help_string(t_fdf *fdf);
 
 /*fdf_error_msg.c*/
 int		perror_msg(char *msg);

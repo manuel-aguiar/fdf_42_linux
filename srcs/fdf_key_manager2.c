@@ -22,6 +22,7 @@ int	adjust_offset(t_fdf *fdf, int key, int change)
 		fdf->view.x_offset += change;
 	if ((key >> BIT_MVL) & 1)
 		fdf->view.x_offset += -change;
+	fdf->state_changed = 1;
 	return (1);
 }
 
@@ -35,23 +36,28 @@ int	adjust_zoom(t_fdf *fdf, int key, int change)
 	if ((key >> BIT_ZOUT) & 1)
 		fdf->view.zoom -= change;
 	if (fdf->view.zoom < 1)
+	{
 		fdf->view.zoom = 1;
+		return (1);
+	}
 	fdf->view.x_offset = fdf->win_width / 2 - (fdf->win_width / 2 \
 	- fdf->view.x_offset) * fdf->view.zoom / prev_zoom;
 	fdf->view.y_offset = fdf->win_height / 2 - (fdf->win_height / 2 \
 	- fdf->view.y_offset) * fdf->view.zoom / prev_zoom;
+	fdf->state_changed = 1;
 	return (1);
 }
 
 void reset_defaults(t_fdf *fdf)
 {
-	fdf->view.zoom = ft_min(fdf->win_width / fdf->mcols / 2, \
-					fdf->win_height / fdf->mrows / 2);
+	fdf->view.zoom = ft_max(ft_min(fdf->win_width / fdf->mcols * 2 / 3, \
+					fdf->win_height / fdf->mrows * 2 / 3), 1);
 	fdf->view.z_multi = ft_fmin((float)ft_max(fdf->mrows, fdf->mcols)
 						/ (float)ft_max(fdf->z_range, 1), Z_MULTI);
 	fdf->view.x_offset = fdf->win_width / 2;
 	fdf->view.y_offset = fdf->win_height / 2;
 	fdf->first_render = 1;
+	fdf->state_changed = 1;
 }
 
 int	apply_projection(t_fdf *fdf, int key)

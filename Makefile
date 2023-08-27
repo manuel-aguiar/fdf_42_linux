@@ -40,6 +40,7 @@ FILES		=		fdf_main.c							\
 					fdf_key_manager2.c					\
 					fdf_mouse_manager.c					\
 					fdf_draw.c							\
+					fdf_help_string.c					\
 					fdf_error_msg.c
 
 SRCS		:= 		$(addprefix $(SRC_PATH)/, $(FILES))
